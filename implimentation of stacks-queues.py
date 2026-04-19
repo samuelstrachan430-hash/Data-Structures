@@ -1,13 +1,13 @@
 import sys
 import os
 try:
-    from stacksQueues import *
+    from stacksQueues import * # type: ignore
 except:
     print("Error importing library")
     sys.exit()
 
 def stacks():
-    stack1 = stack()
+    stack1 = stack() # pyright: ignore[reportUndefinedVariable]
     while True:
         try: responce = int(input("enter what operation\n"f"{'1 - push':<15} {'2 - pop':<15} {'3 - peek':<15}\n"f"{'4 - size':<15} {'5 - isEmpty':<15} {'6 - isFull':<15} {'7 - Exit':<15}\n"))
         except ValueError: responce = 0
@@ -23,7 +23,7 @@ def stacks():
 
 def queues():
     print("################\nQUEUES")
-    queue1 = queue()
+    queue1 = queue() # type: ignore
     while True:
         try: responce = int(input("enter what operation\n"f"{'1 - enqueue':<20} {'2 - dequeue':<20} {'3 - peek':<20}\n"f"{'4 - size':<20} {'5 - isEmpty':<20} {'6 - isFull':<20} {'7 - Exit':<20}\n"))
         except ValueError: responce = 0
@@ -33,14 +33,14 @@ def queues():
             case 3: clear_terminal(); print(peek_validation(queue1))
             case 4: clear_terminal(); print(queue1.Getsize())
             case 5: clear_terminal(); print(queue1.isEmpty())
-            case 6: clear_terminal(); print(queue.isFull())
+            case 6: clear_terminal(); print(queue.isFull()) # type: ignore
             case 7: clear_terminal(); clear_terminal(); break
             case _: clear_terminal(); print("invalid input")
              
 
 def circular_queues():
         print("################\nCIRCULAR QUEUES")
-        circularQueue1 = circularQueue()
+        circularQueue1 = circularQueue() # type: ignore
         while True:
             try: responce = int(input("enter what operation\n"f"{'1 - enqueue':<20} {'2 - dequeue':<20} {'3 - peek':<20}\n"f"{'4 - size':<20} {'5 - isEmpty':<20} {'6 - isFull':<20} {'7 - Exit':<20}\n"))
             except ValueError: responce = 0
@@ -51,7 +51,7 @@ def circular_queues():
                 case 4: clear_terminal(); print(circularQueue1.size())
                 case 5: clear_terminal(); print(circularQueue1.isEmpty())
                 case 6: clear_terminal(); print(circularQueue1.isFull())
-                case 7: clear_terminal(); clear_terminal(); break
+                case 7: clear_terminal(); break
                 case _: clear_terminal(); print("invalid input")
 
 def stack_push_validation(stack, item):
@@ -81,10 +81,20 @@ def peek_validation(any):
         return any.peek()
 
 def clear_terminal():
-    #if os.name == 'nt': os.system('cls')
-    #else: os.system('clear')
-    return None
+    global yes
+    if yes:
+         return None
+    else:
+        if os.name == 'nt': os.system('cls')
+        else: os.system('clear')
+        return None
+
 def run():
+     if input("Are you using IDLE? (y/n) ").lower() == "y":
+          print("There is a procedure to clear the screen, which does not work in IDLE, so I have disabled it")
+          global yes; yes= True
+     else:
+          yes = False 
      while True:
         try: responce = int(input("enter what data structure\n"f"{'1 - stack':<20} {'2 - queue':<20} {'3 - circular queue':<20} {'4 - quit':<20}\n"))
         except ValueError: responce = 0
@@ -95,4 +105,5 @@ def run():
             case 4: clear_terminal(); print("Exiting..."); sys.exit()
             case _: clear_terminal(); print("invalid input")
 
+global yes
 run()
